@@ -1,0 +1,19 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Gluten:wght@100&family=Rubik+Beastly&display=swap');
+
+
+.titulo{
+    font-family: 'Rubik Beastly', cursive;
+    size: 70 px;
+    text-align: center;
+}
+
+.titulo2{
+    font-family: 'Gluten', cursive;
+    size: 20 px;
+
+}
+.titulo3{
+    font-family: 'Carter One', cursive;
+    size: 15 px;
+}

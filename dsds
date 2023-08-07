@@ -1,0 +1,41 @@
+[33mcommit 882fed43f3db3dbbc76f6644d20dc2e6f8a033f3[m[33m ([m[1;36mHEAD -> [m[1;32mdev1[m[33m, [m[1;31morigin/dev1[m[33m)[m
+Author: fercho2511 <fercho11251989x64gmail.com>
+Date:   Sun Apr 24 23:41:16 2022 -0400
+
+    modificacion de zona
+
+[33mcommit abff8651ec9d1c4826ef60c8fd862846e5d8c77b[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m
+Author: fercho2511 <fercho11251989x64gmail.com>
+Date:   Sun Apr 24 15:13:52 2022 -0400
+
+    registro de zona
+
+[33mcommit f09070a8c1bca524b84c2dba12a3607b8286f462[m
+Author: fercho2511 <fercho11251989x64gmail.com>
+Date:   Fri Apr 22 21:43:57 2022 -0400
+
+    implementando pruebas en el registro de sillas
+
+[33mcommit 664669cdc8e643885eaf2db1c6a051ae3b88882a[m
+Author: fercho2511 <fercho11251989x64gmail.com>
+Date:   Wed Apr 20 22:16:56 2022 -0400
+
+    implementando mapa svg
+
+[33mcommit c126901d53fd56a70f4968209ec1b7259b477f0f[m
+Author: fercho <fercho11251989@gmail.com>
+Date:   Wed Apr 20 10:44:46 2022 -0400
+
+    loguin terminado
+
+[33mcommit 18891bd6ad94f79716862bb97e0dec59ca60a0a9[m
+Author: fercho <fercho11251989@gmail.com>
+Date:   Tue Apr 19 12:56:22 2022 -0400
+
+    validacion de loguin y menu inicio
+
+[33mcommit c4830623f0e49368188213fc8c1d4d70e3f43b32[m
+Author: fercho <fercho11251989@gmail.com>
+Date:   Mon Apr 18 23:40:51 2022 -0400
+
+    iniciando el proyecto
