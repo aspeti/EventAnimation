@@ -4,6 +4,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Usuario extends CI_Controller {
 
+
+		// public function __construct()
+		// 	{
+		// 	parent::__construct();
+		// 	$this->load->model('google_login_model');
+		// 	}
+
+
         
         public function index()
         {
@@ -22,28 +30,102 @@ class Usuario extends CI_Controller {
 			if (isset($_GET["code"])) {
 				$token = $google_client->fetchAccessTokenWithAuthCode($_GET["code"]);
 
-				if (!isset($token['error'])) {
+				if(!isset($token["error"]))
+				{
 					$google_client->setAccessToken($token['access_token']);
+					//redirect('usuario/panel','refresh');
+					$this->session->set_userdata('access_token', $token['access_token']);
 
-					$this->sessiom ->userdata('access_token', $token['access_token']);
+					$google_service = new Google_Service_Oauth2($google_client);
 
-					$google_service = new Google_Service_oauth2($google_client);
+					$data = $google_service->userinfo->get(); // aca obtiene toda la info del usuario
+
+
 					//$data = $google_service->userinfo->get();
-					$curren_datetime = date('Y-m-d H:i:s');
-					if ($this->google_login_model) {
-						# code...
-					}
+					$current_datetime = date('Y-m-d H:i:s');
+					if($this->usuarioper_model->Is_already_register($data['email']))
+						{
+						//update data
+						$user_data = array(
+						'nombre' => $data['given_name'],
+						'apellido'  => $data['family_name'],
+						//'email' => $data['email'],
+						'password' => $data['id'],
+
+						//'profile_picture'=> $data['picture'],
+						'fecha_modificacion' => $current_datetime
+						);
+
+						$this->usuarioper_model->modificarUsuario2($user_data, $data['email']);
+						}
+						else
+						{
+						 //insert data
+						 $user_data = array(
+						  'password' => $data['id'],
+						  'nombre'  => $data['given_name'],
+						  'apellido'   => $data['family_name'],
+						  'email'  => $data['email'],
+						  //'profile_picture' => $data['picture'],
+						  'fecha_creacion'  => $current_datetime,
+						  'rol'  => '1'
+
+						 );
+					
+						 $this->usuarioper_model->agregarUsuario($user_data);
+						 
+						}
+
+
+					
+						$login1=$data['email'];
+						$pass2=$data['id'];
+
+
+						// PARA CARGAR ALS VARIABLE SSE SECCION DESDE GOOGLE
+
+
+						$consulta=$this->usuario_model->validar($login1,$pass2);
+						if ($consulta->num_rows()>0) 
+						 {
+							 
+							foreach ($consulta->result() as $row)
+							{
+								$this->session->set_userdata('idusuario',$row->id);
+								$this->session->set_userdata('login',$row->email);
+								$this->session->set_userdata('password',$row->password);
+								$this->session->set_userdata('idRol',$row->rol);
+								$this->session->set_userdata('nombres',$row->nombre);
+								$this->session->set_userdata('foto',$row->foto);	
+								redirect('usuario/panel','refresh');				
+							}
+						}
+						else 
+						{
+							redirect('usuario/index/1','refresh');				
+						}
+						// AHST AACA ALS AVRIABLES DE SECION
+
+						//$this->session->set_userdata('user_data', $user_data);
 
 					
 				}
 
 			}
-			if (!isset($_SESSION['access_token'])) {
-				$login_button = $google_client->createAuthUrl() ;
-			}
-			$data['login_button']=$login_button;
 
-			
+			$login_button = '';
+			if(!$this->session->userdata('access_token'))
+			{
+			$login_button = $google_client->createAuthUrl() ;
+			 $data['login_button'] = $login_button;
+			 $this->load->view('loguin/loguin2',$data);
+			}
+			else
+			{
+                $this->load->view('loguin/loguin2');
+			}
+
+
      
             //index.php/controlador/metodo/
             $data['msg']=$this->uri->segment(3);
@@ -86,7 +168,7 @@ class Usuario extends CI_Controller {
                 //creamos las variables de sesion
 
                 $this->session->set_userdata('idusuario',$row->id);
-                $this->session->set_userdata('login',$row->login);
+                $this->session->set_userdata('login',$row->email);
                 $this->session->set_userdata('password',$row->password);
                 $this->session->set_userdata('idRol',$row->rol);
                 $this->session->set_userdata('nombres',$row->nombre);
@@ -154,12 +236,14 @@ class Usuario extends CI_Controller {
             redirect('usuario/index/3','refresh');
         }
 
-        //para registro de venta o reserva
-        public function registrar_venta()
-        {
-            # desarrollar el codigo para realizar la venta 
-        }
-
+        //  function logout2()
+		// {
+		//  $this->session->unset_userdata('access_token');
+	   
+		//  $this->session->unset_userdata('user_data');
+	   
+		//  redirect('google_login/login');
+		// }
        
 
     

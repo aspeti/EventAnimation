@@ -15,30 +15,13 @@ class Usuario_model extends CI_Model {
         //consulta para leer la lista 
 	public function validar($login,$password)
 	{
-
-        //consulta para validar
-                // $this->db->select('*');
-                // $this->db->from('usuario');
-                // $this->db->where('login',$login);
-                // //este doble where es como un and
-                // //logica de actuiverecord
-                // $this->db->where('password',$password);
-                // $this->db->where('estado',$estado);
-
-
                 $query="SELECT u.*
                 from usuario u
-                where u.password ='$password' and u.login = '$login' and u.estado=1";
+                where u.password ='$password' and u.email = '$login' and u.estado=1";
 
         $resultados = $this->db->query($query);
         return $resultados;
 
-
-               // return $this->db->get();
-
-                //consulta en mysql completa
-               /*  $query="SELECT * FROM usuario WHERE login='".$login."' AND password='".$password."'";
-                //  return $this->db->query($query);*/
     }
 
 }

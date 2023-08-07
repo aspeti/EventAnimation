@@ -9,22 +9,7 @@ class Usuarioper_model extends CI_Model {
         //consulta para leer la lista 
 
 
-       
-	public function lista()
-	{
-                $this->db->select('*');
-                $this->db->from('socio');
-                return $this->db->get();
-	}
-
-        //consulta para obtener la lista de estudiantes
-        public function obtenerUsuario($idUsuario)
-	{
-                $this->db->select('*');
-                $this->db->from('socio');
-                $this->db->where('idUsuario',$idUsuario);
-                return $this->db->get();
-	}
+      
 
 
         //consulta para el modificado de datos de lso esudiantes o actualizacion de datos
@@ -37,11 +22,14 @@ class Usuarioper_model extends CI_Model {
         // return $this->db->get();
 	}
 
-        //consulta para ingresar datos del estudiante a la base de datos
-        //lo importante es lo q contenga data
 
+	function modificarUsuario2($data, $email)
+	{
+	 $this->db->where('email', $email);
+	 $this->db->update('usuario', $data);
+	}
 
-        //aca vamso a crear el usuario y la contraseña
+    
         public function crearLoguin($nom,$ap,$am,$ci){          
 
                 //aca estamos captantdo ls valores y obteniendo el primer caracter 
@@ -79,6 +67,19 @@ class Usuarioper_model extends CI_Model {
                 $this->db->insert('usuario',$data); // aca la clave ses construir bien data, q va a contener
 
         // return $this->db->get();
+	}
+	function Is_already_register($id)
+	{
+	$this->db->where('email', $id);
+	$query = $this->db->get('usuario');
+	if($query->num_rows() > 0)
+	{
+	return true;
+	}
+	else
+	{
+	return false;
+	}
 	}
 
 
@@ -124,24 +125,7 @@ class Usuarioper_model extends CI_Model {
         }
 
 
-        public function habilitado(){
-                $this->db->select('estado_nota_1_bimestre');
-                $this->db->from('calificaciones');
-                return $this->db->get();
-
-        }
-
-        public function habilitarBim($datos){
-           // $datos = ['idUsuario_Acciones' => $idUsuario_Acciones];
-            $this-> db-> update ('calificaciones', $datos); 
-
-        }
-
-        public function desabilitarBim($datos){
-           // $datos = ['idUsuario_Acciones' => $idUsuario_Acciones];
-            $this-> db-> update ('calificaciones', $datos); 
-
-        }
+    
 
 
 
